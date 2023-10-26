@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import HTMLReactParser from "html-react-parser";
-import parse from "html-react-parser";
 import { useParams } from "react-router-dom";
 import millify from "millify";
 import { Col, Row, Typography, Select } from "antd";
@@ -22,8 +21,7 @@ const { Option } = Select;
 
 const CryptoDetails = () => {
   const { coinUUID } = useParams();
-  const [timePeriod, setTimePeriod] = useState("7d");
-  const { data, isFetching } = useGetCryptoDetailsQuery(coinUUID);
+  const { data } = useGetCryptoDetailsQuery(coinUUID);
 
   console.log("data of details:", data);
   const cryptoDetails = data?.data?.coin;
