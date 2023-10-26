@@ -36,14 +36,23 @@ const News: React.FC<cyrptoNewsProps> = (props) => {
             placeholder="Select A Crypto"
             optionFilterProp="children"
             onChange={(value) => setNewsCatergory(value)}
+            // filterOption={(input, option) => {
+            //   if (option && option.children) {
+            //     return (
+            //       option.children.toLowerCase().indexOf(input.toLowerCase()) >=
+            //       0
+            //     );
+            //   }
+            //   return false; // Return false if option or option.children is undefined
+            // }}
             filterOption={(input, option) => {
               if (option && option.children) {
+                const optionChildren = option.children as unknown as string;
                 return (
-                  option.children.toLowerCase().indexOf(input.toLowerCase()) >=
-                  0
+                  optionChildren.toLowerCase().indexOf(input.toLowerCase()) >= 0
                 );
               }
-              return false; // Return false if option or option.children is undefined
+              return false;
             }}
           >
             <Option value="Cryptocurrency"> Cryptocurrency </Option>
