@@ -11,11 +11,11 @@ interface cyrptoNewsProps {
 const { Option } = Select;
 const { Text, Title } = Typography;
 
-const News: React.FC<cyrptoNewsProps> = ({ simplified }) => {
+const News: React.FC<cyrptoNewsProps> = (props) => {
   const [newsCatergory, setNewsCatergory] = useState("Cryptocurrency");
   const { data: cryptoNews } = useGetNewsQuery({
     newsCatergory,
-    count: simplified ? 6 : 150,
+    count: props.simplified ? 6 : 150,
   });
   const { data } = useGetCryptoDataQuery(100);
 
@@ -28,7 +28,7 @@ const News: React.FC<cyrptoNewsProps> = ({ simplified }) => {
 
   return (
     <Row gutter={[20, 20]}>
-      {!simplified && (
+      {!props.simplified && (
         <Col span={24}>
           <Select
             showSearch
@@ -36,9 +36,15 @@ const News: React.FC<cyrptoNewsProps> = ({ simplified }) => {
             placeholder="Select A Crypto"
             optionFilterProp="children"
             onChange={(value) => setNewsCatergory(value)}
-            filterOption={(input, option) =>
-              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-            }
+            filterOption={(input, option) => {
+              if (option && option.children) {
+                return (
+                  option.children.toLowerCase().indexOf(input.toLowerCase()) >=
+                  0
+                );
+              }
+              return false; // Return false if option or option.children is undefined
+            }}
           >
             <Option value="Cryptocurrency"> Cryptocurrency </Option>
             {data?.data?.coins.map((coin: any, i: any) => (
